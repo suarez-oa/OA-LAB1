@@ -15,9 +15,6 @@ def index():
 
 df = pd.read_csv('game_item_review_nuevo.csv', low_memory=False)
 
-@app.get('/')
-def message():
-    return 'Proyecto Individual Oa Johan Javier Suarez Merchan'
 
 
 @app.get('/PlayTimeGenre/')
@@ -35,7 +32,7 @@ def UserForGenre(genre: str) -> dict:
     genre_df = df[df[genre] == 1]
     max_playtime_user = genre_df.loc[genre_df['playtime_forever'].idxmax(), 'user_id']
     year_playtime_df = genre_df.groupby('year')['playtime_forever'].sum().reset_index()
-    playtime_list = year_playtime_df.to_dict(orient='record')
+    playtime_list = year_playtime_df.to_dict(orient='index')
     result = {
         'Usuario con mas horas jugadas para Genero' + genre: max_playtime_user,
         'Horas jugadas': playtime_list}
